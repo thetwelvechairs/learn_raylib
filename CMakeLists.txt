@@ -52,7 +52,7 @@ if (NOT raylib_FOUND) # If there's none, fetch and build raylib
         FetchContent_Populate(raylib)
         set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE) # don't build the supplied examples
         if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
-            set(PLATFORM PLATFORM_RPI)
+            set(PLATFORM "Raspberry Pi")
         endif()
         add_subdirectory(${raylib_SOURCE_DIR} ${raylib_BINARY_DIR})
     endif()
