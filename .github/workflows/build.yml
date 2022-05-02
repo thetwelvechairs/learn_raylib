@@ -12,6 +12,10 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: write
     strategy:
       fail-fast: true
       matrix:
