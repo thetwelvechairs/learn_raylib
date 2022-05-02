@@ -63,6 +63,7 @@ find_package(spdlog REQUIRED)
 
 file(GLOB H_FILES "src/*.h")
 file(GLOB CPP_FILES "src/*.cpp")
+file(GLOB INCLUDE "src/include/*.*/*.*/*.*")
 
 add_executable(${PROJECT_NAME} ${H_FILES} ${CPP_FILES} ${INCLUDE})
 

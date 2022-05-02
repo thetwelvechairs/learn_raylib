@@ -28,7 +28,20 @@ int main()
     const int screenWidth = 320;
     const int screenHeight = 240;
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+    InitWindow(screenWidth, screenHeight, "320 x 240");
+
+    // Define the camera to look into our 3d world
+    Camera camera = { 0 };
+    camera.position = (Vector3){ 20.0f, 20.0f, 20.0f }; // Camera position
+    camera.target = (Vector3){ 0.0f, 8.0f, 0.0f };      // Camera looking at point
+    camera.up = (Vector3){ 0.0f, 1.6f, 0.0f };          // Camera up vector (rotation towards target)
+    camera.fovy = 45.0f;                                // Camera field-of-view Y
+    camera.projection = CAMERA_PERSPECTIVE;             // Camera mode type
+
+    Model tower = LoadModel("../src/include/unicorn.gltf");                 // Load OBJ model
+    Vector3 towerPos = { 0.0f, 2.0f, 0.0f };
+
+    SetCameraMode(camera, CAMERA_FREE); // Set a free camera mode
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -45,9 +58,14 @@ int main()
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-        ClearBackground(RAYWHITE);
+        ClearBackground(BLACK);
 
-        DrawText("Congrats! You created your first window!", 20, 20, 20, LIGHTGRAY);
+        BeginMode3D(camera);
+        DrawModel(tower, towerPos, 1.0f, WHITE);
+        EndMode3D();
+
+        DrawText("Sofia's Pudgy Unicorn!", 20, 20, 22, BLACK);
+        DrawText("Sofia's Pudgy Unicorn!", 21, 21, 22, GRAY);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
