@@ -13,7 +13,7 @@ sudo bash pitft-fbcp.sh
 
 ### Raspberry Pi (buster) dependencies
 ````bash
-sudo apt-get install -y build-essential git python3-pip curl libgl-dev libglu1-mesa-dev libegl-dev
+sudo apt-get install -y build-essential git python3-pip curl libgl-dev libglu1-mesa-dev libegl-dev libxrandr
 pip3 install conan
 export PATH="$HOME/.local/bin:$PATH"
 
