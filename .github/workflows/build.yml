@@ -33,7 +33,6 @@ jobs:
 
       - name: Build dependencies
         run: |
-          export CONAN_SYSREQUIRES_MODE=enabled
           sudo apt-get update -y
           sudo apt-get install -y build-essential git cmake pip curl libgl-dev libglu1-mesa-dev libegl-dev
           pip install conan
