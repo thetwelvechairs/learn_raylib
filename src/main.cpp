@@ -20,6 +20,24 @@
 ********************************************************************************************/
 
 #include "raylib.h"
+#include "rlgl.h"
+#include "spdlog/spdlog.h"
+#include <random>
+
+
+[[maybe_unused]] static int randomInteger(int to, int from){
+    std::random_device randomizerSeed;
+    std::default_random_engine randomEngine(randomizerSeed());
+    std::uniform_int_distribution<int> randomRange(from, to);
+    return randomRange(randomEngine);
+}
+
+[[maybe_unused]] static float randomFloat(float to, float from){
+    std::random_device randomizerSeed;
+    std::default_random_engine randomEngine(randomizerSeed());
+    std::uniform_real_distribution<float> distribution(from, to);
+    return distribution(randomEngine);
+}
 
 int main()
 {
@@ -38,8 +56,8 @@ int main()
     camera.fovy = 45.0f;                                // Camera field-of-view Y
     camera.projection = CAMERA_PERSPECTIVE;             // Camera mode type
 
-    Model tower = LoadModel("../src/include/unicorn.gltf");                 // Load OBJ model
-    Vector3 towerPos = { 0.0f, 2.0f, 0.0f };
+    Model tower = LoadModel("../src/include/unicorn.obj");                 // Load OBJ model
+    Vector3 towerPos = { 0.0f, 0.0f, 0.0f };
 
     SetCameraMode(camera, CAMERA_FREE); // Set a free camera mode
 
@@ -58,14 +76,20 @@ int main()
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-        ClearBackground(BLACK);
+        ClearBackground(DARKGRAY);
 
         BeginMode3D(camera);
-        DrawModel(tower, towerPos, 1.0f, WHITE);
+        camera.position = (Vector3){randomFloat(-30.0f, 30.0f), 20.0f, 20.0f };
+        rlTranslatef(0.0f, 1.0f, 0.0f);
+//        spdlog::info(GetFrameTime());
+        float angle = 20.0f * GetFrameTime() * ((float)2 + 1);
+        rlRotatef(angle, 0.0f, 1.0f, 0.0f);
+        rlScalef(3.0f, 3.0f, 3.0f);
+        DrawModel(tower, towerPos, 1.0f, ORANGE);
         EndMode3D();
 
-        DrawText("Sofia's Pudgy Unicorn!", 20, 20, 22, BLACK);
-        DrawText("Sofia's Pudgy Unicorn!", 21, 21, 22, GRAY);
+        DrawText(" Sofia's Pudgy Unicorn!", 20, 20, 22, BLACK);
+        DrawText(" Sofia's Pudgy Unicorn!", 21, 21, 22, GRAY);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
