@@ -79,11 +79,11 @@ int main()
         ClearBackground(DARKGRAY);
 
         BeginMode3D(camera);
-        camera.position = (Vector3){randomFloat(-30.0f, 30.0f), 20.0f, 20.0f };
         rlTranslatef(0.0f, 1.0f, 0.0f);
-//        spdlog::info(GetFrameTime());
-        float angle = 20.0f * GetFrameTime() * ((float)2 + 1);
-        rlRotatef(angle, 0.0f, 1.0f, 0.0f);
+        const float radius = 10.0f;
+        float camX = (float)sin(GetTime()) * radius;
+        float camZ = (float)cos(GetTime()) * radius;
+        camera.position = (Vector3){camX, 20.0f, camZ};
         rlScalef(3.0f, 3.0f, 3.0f);
         DrawModel(tower, towerPos, 1.0f, ORANGE);
         EndMode3D();
