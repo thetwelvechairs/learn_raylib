@@ -13,14 +13,9 @@ sudo bash pitft-fbcp.sh
 
 ### Raspberry Pi (buster) dependencies
 ````bash
-sudo apt-get install -y build-essential git python3-pip curl libxrandr-dev libxinerama-dev libxinerama-dev libxcursor-dev libxi-dev libgl-dev libegl-dev
+sudo apt-get install -y build-essential git cmake python3-pip curl libxrandr-dev libxinerama-dev libxinerama-dev libxcursor-dev libxi-dev libgl-dev libegl-dev
 pip3 install conan
 export PATH="$HOME/.local/bin:$PATH"
-
-sudo apt install snapd
-# REBOOT REQUIRED
-sudo snap install core
-sudo snap install cmake --classic
 ````
 
 ### Build
