@@ -21,7 +21,6 @@
 
 #include "raylib.h"
 #include "rlgl.h"
-#include "spdlog/spdlog.h"
 #include <random>
 
 
@@ -89,7 +88,7 @@ int main()
         EndMode3D();
 
         DrawText(" Sofia's Pudgy Unicorn!", 20, 20, 22, BLACK);
-        DrawText(" Sofia's Pudgy Unicorn!", 21, 21, 22, GRAY);
+        DrawText(" Sofia's Pudgy Unicorn!", 21, 21, 22, WHITE);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

@@ -33,10 +33,10 @@ jobs:
           java-version: 11
 
 
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
-        with:
-          languages: cpp
+#      - name: Initialize CodeQL
+#        uses: github/codeql-action/init@v2
+#        with:
+#          languages: cpp
 
       - name: Build dependencies
         run: |
