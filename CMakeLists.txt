@@ -29,7 +29,6 @@ endif()
 include(${CMAKE_BINARY_DIR}/conan.cmake)
 set(CONAN_SYSREQUIRES_MODE "enabled")
 conan_cmake_configure(REQUIRES
-        spdlog/1.9.2
         GENERATORS cmake cmake_paths cmake_find_package)
 conan_cmake_autodetect(settings)
 conan_cmake_install(PATH_OR_REFERENCE .
@@ -59,8 +58,6 @@ if (NOT raylib_FOUND) # If there's none, fetch and build raylib
     endif()
 endif()
 
-find_package(spdlog REQUIRED)
-
 file(GLOB H_FILES "src/*.h")
 file(GLOB CPP_FILES "src/*.cpp")
 file(GLOB INCLUDE "src/include/*.*/*.*/*.*")
@@ -68,8 +65,7 @@ file(GLOB INCLUDE "src/include/*.*/*.*/*.*")
 add_executable(${PROJECT_NAME} ${H_FILES} ${CPP_FILES} ${INCLUDE})
 
 target_link_libraries(${PROJECT_NAME}
-        raylib
-        spdlog::spdlog)
+        raylib)
 
 # Web Configurations
 if (${PLATFORM} STREQUAL "Web")

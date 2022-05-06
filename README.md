@@ -20,7 +20,12 @@ export PATH="$HOME/.local/bin:$PATH"
 
 ### Build
 ````bash
+# Not strictly necessary, but I develop on a Mac
+sed -i 's/..\/src\/include\/unicorn.obj/src\/include\/unicorn.obj/g' src/main.cpp
+
 export CONAN_SYSREQUIRES_MODE=enabled
 cmake -DCMAKE_BUILD_TYPE=MinSizeRel -G "CodeBlocks - Unix Makefiles" .
 cmake --build . --target learn_raylib --clean-first -- -j 4
+
+./learn_raylib
 ````
