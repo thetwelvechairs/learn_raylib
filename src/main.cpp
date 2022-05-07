@@ -20,7 +20,12 @@
 ********************************************************************************************/
 
 #include "raylib.h"
+
+#define RAYGUI_IMPLEMENTATION
+#include "include/raygui.h"
+
 #include "rlgl.h"
+
 #include <random>
 
 
@@ -49,16 +54,18 @@ int main()
 
     // Define the camera to look into our 3d world
     Camera camera = { 0 };
-    camera.position = (Vector3){ 20.0f, 20.0f, 20.0f }; // Camera position
-    camera.target = (Vector3){ 0.0f, 8.0f, 0.0f };      // Camera looking at point
-    camera.up = (Vector3){ 0.0f, 1.6f, 0.0f };          // Camera up vector (rotation towards target)
+    camera.position = (Vector3){ 1.0f, 10.0f, 1.0f }; // Camera position
+    camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };      // Camera looking at point
+    camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
     camera.fovy = 45.0f;                                // Camera field-of-view Y
     camera.projection = CAMERA_PERSPECTIVE;             // Camera mode type
 
-    Model tower = LoadModel("../src/include/unicorn.obj");                 // Load OBJ model
-    Vector3 towerPos = { 0.0f, 0.0f, 0.0f };
+    Model unicornBody = LoadModel("../src/include/unicorn.obj");                 // Load OBJ model
+    Vector3 unicornBodyPosition = {0.0f, 0.0f, 0.0f };
 
     SetCameraMode(camera, CAMERA_FREE); // Set a free camera mode
+
+    auto mainColor = PINK;
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -66,32 +73,23 @@ int main()
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        // Update
-        //----------------------------------------------------------------------------------
-        // TODO: Update your variables here
-        //----------------------------------------------------------------------------------
-
-        // Draw
-        //----------------------------------------------------------------------------------
         BeginDrawing();
 
         ClearBackground(DARKGRAY);
 
         BeginMode3D(camera);
-        rlTranslatef(0.0f, 1.0f, 0.0f);
         const float radius = 10.0f;
         float camX = (float)sin(GetTime()) * radius;
         float camZ = (float)cos(GetTime()) * radius;
-        camera.position = (Vector3){camX, 20.0f, camZ};
-        rlScalef(3.0f, 3.0f, 3.0f);
-        DrawModel(tower, towerPos, 1.0f, ORANGE);
+        camera.position = (Vector3){camX, 10.0f, camZ};
+//        rlScalef(1.2f, 1.2f, 1.2f);
+        DrawModel(unicornBody, unicornBodyPosition, 1.0f, mainColor);
         EndMode3D();
 
+        mainColor = GuiColorPicker((Rectangle){0, 0, 100, 100}, NULL, mainColor);
         DrawText(" Sofia's Pudgy Unicorn!", 20, 20, 22, BLACK);
         DrawText(" Sofia's Pudgy Unicorn!", 21, 21, 22, WHITE);
-
         EndDrawing();
-        //----------------------------------------------------------------------------------
     }
 
     // De-Initialization
