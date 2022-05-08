@@ -835,11 +835,11 @@ typedef enum {
 
 #if defined(RAYGUI_IMPLEMENTATION)
 
-#include <stdio.h>              // Required for: FILE, fopen(), fclose(), fprintf(), feof(), fscanf(), vsprintf() [GuiLoadStyle(), GuiLoadIcons()]
-#include <stdlib.h>             // Required for: malloc(), calloc(), free() [GuiLoadStyle(), GuiLoadIcons()]
-#include <string.h>             // Required for: strlen() [GuiTextBox(), GuiTextBoxMulti(), GuiValueBox()], memset(), memcpy()
-#include <stdarg.h>             // Required for: va_list, va_start(), vfprintf(), va_end() [TextFormat()]
-#include <math.h>               // Required for: roundf() [GuiColorPicker()]
+#include <cstdio>              // Required for: FILE, fopen(), fclose(), fprintf(), feof(), fscanf(), vsprintf() [GuiLoadStyle(), GuiLoadIcons()]
+#include <cstdlib>             // Required for: malloc(), calloc(), free() [GuiLoadStyle(), GuiLoadIcons()]
+#include <cstring>             // Required for: strlen() [GuiTextBox(), GuiTextBoxMulti(), GuiValueBox()], memset(), memcpy()
+#include <cstdarg>             // Required for: va_list, va_start(), vfprintf(), va_end() [TextFormat()]
+#include <cmath>               // Required for: roundf() [GuiColorPicker()]
 
 #ifdef __cplusplus
     #define RAYGUI_CLITERAL(name) name
