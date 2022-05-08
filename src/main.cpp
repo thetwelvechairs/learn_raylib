@@ -54,7 +54,7 @@ int main()
 
     // Define the camera to look into our 3d world
     Camera camera = { 0 };
-    camera.position = (Vector3){ 1.0f, 10.0f, 1.0f }; // Camera position
+    camera.position = (Vector3){ 1.0f, 5.0f, 1.0f }; // Camera position
     camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };      // Camera looking at point
     camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
     camera.fovy = 45.0f;                                // Camera field-of-view Y
@@ -66,6 +66,7 @@ int main()
     SetCameraMode(camera, CAMERA_FREE); // Set a free camera mode
 
     auto mainColor = PINK;
+    RenderTexture2D target = LoadRenderTexture(320, 240);
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -77,18 +78,25 @@ int main()
 
         ClearBackground(DARKGRAY);
 
+        // Render generated texture using selected postprocessing shader
+//        BeginShaderMode(1);
+        // NOTE: Render texture must be y-flipped due to default OpenGL coordinates (left-bottom)
+//        DrawTextureRec(target.texture, (Rectangle){ 0, 0, (float)target.texture.width, (float)-target.texture.height }, (Vector2){ 0, 0 }, WHITE);
+//        EndShaderMode();
+
         BeginMode3D(camera);
         const float radius = 10.0f;
         float camX = (float)sin(GetTime()) * radius;
         float camZ = (float)cos(GetTime()) * radius;
-        camera.position = (Vector3){camX, 10.0f, camZ};
+        camera.position = (Vector3){camX, 5.0f, camZ};
 //        rlScalef(1.2f, 1.2f, 1.2f);
         DrawModel(unicornBody, unicornBodyPosition, 1.0f, mainColor);
         EndMode3D();
+        GuiDrawRectangle((Rectangle){0, 0, 120, 120}, 1, BLACK, LIGHTGRAY);
+        DrawText(" Sofia's Pudgy Unicorn!", 2, 2, 11, GRAY);
+        DrawText(" Sofia's Pudgy Unicorn!", 1, 1, 11, BLUE);
+        mainColor = GuiColorPicker((Rectangle){0, 120, 120, 120}, nullptr, mainColor);
 
-        mainColor = GuiColorPicker((Rectangle){0, 0, 100, 100}, NULL, mainColor);
-        DrawText(" Sofia's Pudgy Unicorn!", 20, 20, 22, BLACK);
-        DrawText(" Sofia's Pudgy Unicorn!", 21, 21, 22, WHITE);
         EndDrawing();
     }
 
