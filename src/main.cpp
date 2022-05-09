@@ -20,12 +20,17 @@
     return distribution(randomEngine);
 }
 
+int getNext(std::vector<int> vect, size_t i, auto v) {
+    return vect[ (i+1) % v.size() ];
+}
+
 int main()
 {
     const int screenWidth = 320;
     const int screenHeight = 240;
 
-    InitWindow(screenWidth, screenHeight, "320 x 240");
+    std::string title = std::to_string(screenWidth) + "x" + std::to_string(screenHeight);
+    InitWindow(screenWidth, screenHeight, title.c_str());
 
     Model unicornBody = LoadModel("../src/include/unicorn_body.obj");
     Model unicornHorn = LoadModel("../src/include/unicorn_horn.obj");
@@ -41,16 +46,15 @@ int main()
     camera.fovy = 55.0f;                                // Camera field-of-view Y
     camera.projection = CAMERA_PERSPECTIVE;             // Camera mode type
 
+    SetCameraMode(camera, CAMERA_ORBITAL);
 
-
-//    SetCameraMode(camera, CAMERA_ORBITAL); // Set a free camera mode
-
-    auto colorPaneActive = true;
+    auto colorPaneActive = false;
     auto unicornBodyColor = BLUE;
     auto unicornHornColor = GREEN;
-    auto unicornManeColor = PINK;
-    auto unicornTailColor = YELLOW;
-    RenderTexture2D target = LoadRenderTexture(320, 240);
+    auto unicornManeColor = YELLOW;
+    auto unicornTailColor = PINK;
+    std::vector<std::string> unicornParts = {"Body", "Mane", "Tail", "Horn"};
+    std::string selectedPart = "Body";
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -59,16 +63,11 @@ int main()
     while (!WindowShouldClose())
     {
         if (IsKeyPressed(KEY_ONE)) colorPaneActive = !colorPaneActive;
+//        if (IsKeyPressed(KEY_TWO)) selectedPart = unicornParts.;
 
         BeginDrawing();
 
         ClearBackground(DARKGRAY);
-
-        // Render generated texture using selected postprocessing shader
-//        BeginShaderMode(1);
-        // NOTE: Render texture must be y-flipped due to default OpenGL coordinates (left-bottom)
-//        DrawTextureRec(target.texture, (Rectangle){ 0, 0, (float)target.texture.width, (float)-target.texture.height }, (Vector2){ 0, 0 }, WHITE);
-//        EndShaderMode();
 
         BeginMode3D(camera);
         const float radius = 8.0f;
@@ -80,18 +79,17 @@ int main()
         DrawModel(unicornMane, unicornBodyPosition, 1.0f, unicornManeColor);
         DrawModel(unicornTail, unicornBodyPosition, 1.0f, unicornTailColor);
 
-        DrawGrid(80, 4.0f);
+        DrawGrid(60, 2.0f);
 
         EndMode3D();
 
         if (colorPaneActive) {
-//            GuiDrawRectangle((Rectangle) {0, 0, 120, 120}, 1, BLACK, WHITE);
-//            DrawText(" Sofia's Pudgy Unicorn!", 2, 2, 10, GRAY);
-//            DrawText(" Sofia's Pudgy Unicorn!", 1, 1, 10, BLUE);
             unicornBodyColor = GuiColorPicker((Rectangle) {0, 120, 120, 120}, nullptr, unicornBodyColor);
         }
 
-        GuiDrawRectangle((Rectangle) {0, 0, 320, 20}, 1, BLACK, GRAY);
+        GuiDrawRectangle((Rectangle) {0, 0, 10, 240}, 1, BLACK, LIGHTGRAY);
+        DrawText(">", 4, 110, 10, BLACK);
+        GuiDrawRectangle((Rectangle) {0, 0, 320, 20}, 1, BLACK, LIGHTGRAY);
         DrawText("PUDGY v0.01 alpha", 5, 5, 10, BLACK);
 
         EndDrawing();
