@@ -56,6 +56,8 @@ int main()
     std::vector<std::string> unicornParts = {"Body", "Mane", "Tail", "Horn"};
     std::string selectedPart = "Body";
 
+    auto clicked = false;
+
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
@@ -67,7 +69,7 @@ int main()
 
         BeginDrawing();
 
-        ClearBackground(DARKGRAY);
+        ClearBackground(BLACK);
 
         BeginMode3D(camera);
         const float radius = 8.0f;
@@ -87,10 +89,23 @@ int main()
             unicornBodyColor = GuiColorPicker((Rectangle) {0, 120, 120, 120}, nullptr, unicornBodyColor);
         }
 
-        GuiDrawRectangle((Rectangle) {0, 0, 10, 240}, 1, BLACK, LIGHTGRAY);
-        DrawText(">", 4, 110, 10, BLACK);
-        GuiDrawRectangle((Rectangle) {0, 0, 320, 20}, 1, BLACK, LIGHTGRAY);
-        DrawText("PUDGY v0.01 alpha", 5, 5, 10, BLACK);
+
+        GuiDrawRectangle((Rectangle) {0, 0, 10, 240}, 1, LIGHTGRAY, LIGHTGRAY);
+        GuiSetStyle(BUTTON, BORDER_WIDTH, 1);
+        GuiSetStyle(BUTTON, TEXT_ALIGNMENT, GUI_TEXT_ALIGN_CENTER);
+        GuiDrawRectangle((Rectangle) {310, 0, 320, 240}, 1, LIGHTGRAY, LIGHTGRAY);
+        GuiDrawRectangle((Rectangle) {0, 0, 320, 14}, 1, LIGHTGRAY, LIGHTGRAY);
+        DrawText("PUDGY", 142, 2, 10, BLACK);
+        GuiDrawRectangle((Rectangle) {0, 226, 320, 240}, 1, LIGHTGRAY, LIGHTGRAY);
+        DrawText("v0.01 alpha", 132, 228, 10, BLACK);
+
+        GuiButton((Rectangle) {1, 2, 20, 20}, "B");
+        GuiButton((Rectangle) {299, 2, 20, 20}, "H");
+        GuiButton((Rectangle) {1, 101, 20, 20}, "<");
+        GuiButton((Rectangle) {299, 100, 20, 20}, ">");
+        GuiButton((Rectangle) {1, 219, 20, 20}, "M");
+        GuiButton((Rectangle) {299, 219, 20, 20}, "T");
+
 
         EndDrawing();
     }
