@@ -5,17 +5,19 @@ Raspberry Pi / TFT screen project for drawing graphics on a Raspberry Pi without
 
 
 
-### TFT support
-````bash
-sudo curl https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/pitft-fbcp.sh >pitft-fbcp.sh
-sudo bash pitft-fbcp.sh
-````
-
 ### Raspberry Pi (buster) dependencies
 ````bash
 sudo apt-get install -y build-essential git cmake python3-pip curl libxrandr-dev libxinerama-dev libxinerama-dev libxcursor-dev libxi-dev libgl-dev libegl-dev
 pip3 install conan
 export PATH="$HOME/.local/bin:$PATH"
+````
+
+### TFT support
+````bash
+sudo pip3 install --upgrade adafruit-python-shell click
+git clone https://github.com/adafruit/Raspberry-Pi-Installer-Scripts.git
+cd Raspberry-Pi-Installer-Scripts
+sudo python3 adafruit-pitft.py --display=28c --rotation=270 --install-type=fbcp
 ````
 
 ### Build
