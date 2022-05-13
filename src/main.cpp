@@ -58,7 +58,7 @@ int main()
 
     auto clicked = false;
 
-    SetTargetFPS(200);               // Set our game to run at 60 frames-per-second
+    SetTargetFPS(50);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
     // Main game loop
