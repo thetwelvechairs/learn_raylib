@@ -48,7 +48,7 @@ int main()
 
     SetCameraMode(camera, CAMERA_ORBITAL);
 
-    auto colorPaneActive = false;
+    bool colorPaneActive;
     auto unicornBodyColor = PINK;
     auto unicornHornColor = GREEN;
     auto unicornManeColor = YELLOW;
@@ -69,24 +69,35 @@ int main()
 
         BeginDrawing();
 
-        ClearBackground(BLACK);
+        ClearBackground(WHITE);
 
         BeginMode3D(camera);
-        const float radius = 8.0f;
+        const float radius = 10.0f;
         float camX = (float)sin(GetTime()) * radius;
         float camZ = (float)cos(GetTime()) * radius;
-        camera.position = (Vector3){camX, 8.0f, camZ};
+        camera.position = (Vector3){camX, radius, camZ};
         DrawModel(unicornBody, unicornBodyPosition, 1.0f, unicornBodyColor);
         DrawModel(unicornHorn, unicornBodyPosition, 1.0f, unicornHornColor);
         DrawModel(unicornMane, unicornBodyPosition, 1.0f, unicornManeColor);
         DrawModel(unicornTail, unicornBodyPosition, 1.0f, unicornTailColor);
 
-        DrawGrid(4.0f, 20.0f);
+        DrawGrid(4.0f, 8.0f);
 
         EndMode3D();
 
         if (colorPaneActive) {
-            unicornBodyColor = GuiColorPicker((Rectangle) {0, 120, 120, 120}, nullptr, unicornBodyColor);
+            if (selectedPart == "Body"){
+                unicornBodyColor = GuiColorPicker((Rectangle) {20, 100, 120, 120}, nullptr, unicornBodyColor);
+            }
+            if (selectedPart == "Horn"){
+                unicornHornColor = GuiColorPicker((Rectangle) {20, 100, 120, 120}, nullptr, unicornHornColor);
+            }
+            if (selectedPart == "Mane"){
+                unicornManeColor = GuiColorPicker((Rectangle) {20, 100, 120, 120}, nullptr, unicornManeColor);
+            }
+            if (selectedPart == "Tail"){
+                unicornTailColor = GuiColorPicker((Rectangle) {20, 100, 120, 120}, nullptr, unicornTailColor);
+            }
         }
 
 
@@ -99,12 +110,24 @@ int main()
         GuiDrawRectangle((Rectangle) {0, 226, 320, 240}, 1, RED, RED);
         DrawText("v0.01 alpha", 132, 228, 10, BLACK);
 
-        GuiButton((Rectangle) {1, 2, 20, 20}, "B");
-        GuiButton((Rectangle) {299, 2, 20, 20}, "H");
-        GuiButton((Rectangle) {1, 105, 20, 20}, "<");
-        GuiButton((Rectangle) {299, 105, 20, 20}, ">");
-        GuiButton((Rectangle) {1, 219, 20, 20}, "M");
-        GuiButton((Rectangle) {299, 219, 20, 20}, "T");
+        if (GuiButton((Rectangle) {1, 2, 20, 20}, "B")){
+            selectedPart = "Body";
+            colorPaneActive = !colorPaneActive;
+        }
+        if (GuiButton((Rectangle) {299, 2, 20, 20}, "H")){
+            selectedPart = "Horn";
+            colorPaneActive = !colorPaneActive;
+        }
+//        if (GuiButton((Rectangle) {1, 105, 20, 20}, "<")) colorPaneActive = !colorPaneActive;
+//        if (GuiButton((Rectangle) {299, 105, 20, 20}, ">")) colorPaneActive = !colorPaneActive;
+        if (GuiButton((Rectangle) {1, 219, 20, 20}, "M")){
+            selectedPart = "Mane";
+            colorPaneActive = !colorPaneActive;
+        }
+        if (GuiButton((Rectangle) {299, 219, 20, 20}, "T")){
+            selectedPart = "Tail";
+            colorPaneActive = !colorPaneActive;
+        }
 
 
         EndDrawing();
