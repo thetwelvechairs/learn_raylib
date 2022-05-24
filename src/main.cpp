@@ -20,12 +20,11 @@
     return distribution(randomEngine);
 }
 
-[[maybe_unused]] int getNext(std::vector<int> vect, size_t i, auto v) {
+[[maybe_unused]] int getNext(const std::vector<int>& vect, size_t i, auto v) {
     return vect[ (i+1) % v.size() ];
 }
 
-int main()
-{
+int main(){
     const int screenWidth = 320;
     const int screenHeight = 240;
 
@@ -104,22 +103,19 @@ int main()
 
         DrawGrid(14.0f, 0.5f);
 
-        if (collision.hit)
-        {
+        if (collision.hit){
 //            DrawCube(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, RED);
-            DrawCubeWires(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, MAROON);
-
-            DrawCubeWires(cubePosition, cubeSize.x + 0.2f, cubeSize.y + 0.2f, cubeSize.z + 0.2f, GREEN);
+            DrawCubeWires(unicornBodyPosition, cubeSize.x, cubeSize.y, cubeSize.z, MAROON);
+            DrawCubeWires(unicornBodyPosition, cubeSize.x + 0.2f, cubeSize.y + 0.2f, cubeSize.z + 0.2f, GREEN);
         }
-        else
-        {
+        else{
 //            DrawCube(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, GRAY);
 //            DrawCubeWires(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, DARKGRAY);
         }
 
         EndMode3D();
 
-        if (colorPaneActive) {
+        if (colorPaneActive){
             if (selectedPart == "Body"){
                 unicornBodyColor = GuiColorPicker((Rectangle) {170, 110, 120, 120}, nullptr, unicornBodyColor);
             }
@@ -144,25 +140,24 @@ int main()
 //        GuiDrawRectangle((Rectangle) {0, 226, 320, 240}, 1, RED, RED);
 //        DrawText("v0.01 alpha", 132, 228, 10, BLACK);
 
-        if (GuiButton((Rectangle) {0, 2, 50, 20}, "Body")){
+        if (GuiButton((Rectangle) {0, 1, 50, 20}, "Body")){
             selectedPart = "Body";
             colorPaneActive = !colorPaneActive;
         }
-        if (GuiButton((Rectangle) {0, 70, 50, 20}, "Horn")){
+        if (GuiButton((Rectangle) {0, 65, 50, 20}, "Horn")){
             selectedPart = "Horn";
             colorPaneActive = !colorPaneActive;
         }
 //        if (GuiButton((Rectangle) {1, 105, 20, 20}, "<")) colorPaneActive = !colorPaneActive;
 //        if (GuiButton((Rectangle) {299, 105, 20, 20}, ">")) colorPaneActive = !colorPaneActive;
-        if (GuiButton((Rectangle) {0, 219, 50, 20}, "Mane")){
-            selectedPart = "Mane";
-            colorPaneActive = !colorPaneActive;
-        }
-        if (GuiButton((Rectangle) {0, 140, 50, 20}, "Tail")){
+        if (GuiButton((Rectangle) {0, 130, 50, 20}, "Tail")){
             selectedPart = "Tail";
             colorPaneActive = !colorPaneActive;
         }
-
+        if (GuiButton((Rectangle) {0, 200, 50, 20}, "Mane")){
+            selectedPart = "Mane";
+            colorPaneActive = !colorPaneActive;
+        }
 
         EndDrawing();
     }
