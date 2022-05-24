@@ -144,17 +144,17 @@ int main(){
             selectedPart = "Body";
             colorPaneActive = !colorPaneActive;
         }
-        if (GuiButton((Rectangle) {0, 65, 50, 20}, "Horn")){
+        if (GuiButton((Rectangle) {0, 60, 50, 20}, "Horn")){
             selectedPart = "Horn";
             colorPaneActive = !colorPaneActive;
         }
 //        if (GuiButton((Rectangle) {1, 105, 20, 20}, "<")) colorPaneActive = !colorPaneActive;
 //        if (GuiButton((Rectangle) {299, 105, 20, 20}, ">")) colorPaneActive = !colorPaneActive;
-        if (GuiButton((Rectangle) {0, 130, 50, 20}, "Tail")){
+        if (GuiButton((Rectangle) {0, 120, 50, 20}, "Tail")){
             selectedPart = "Tail";
             colorPaneActive = !colorPaneActive;
         }
-        if (GuiButton((Rectangle) {0, 200, 50, 20}, "Mane")){
+        if (GuiButton((Rectangle) {0, 182, 50, 20}, "Mane")){
             selectedPart = "Mane";
             colorPaneActive = !colorPaneActive;
         }
