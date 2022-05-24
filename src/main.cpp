@@ -20,7 +20,7 @@
     return distribution(randomEngine);
 }
 
-int getNext(std::vector<int> vect, size_t i, auto v) {
+[[maybe_unused]] int getNext(std::vector<int> vect, size_t i, auto v) {
     return vect[ (i+1) % v.size() ];
 }
 
