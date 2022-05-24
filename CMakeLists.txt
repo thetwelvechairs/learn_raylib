@@ -38,9 +38,10 @@ conan_cmake_install(PATH_OR_REFERENCE .
 ########################################################################################################################
 
 # Dependencies
-set(CMAKE_CXX_FLAGS "-DCUSTOMIZE_BUILD=ON")
+set(CUSTOMIZE_BUILD ON)
 set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(USE_EXTERNAL_GLFW OFF)
+
 find_package(raylib 4.0.0 QUIET) # QUIET or REQUIRED
 if (NOT raylib_FOUND) # If there's none, fetch and build raylib
     include(FetchContent)
@@ -56,6 +57,8 @@ if (NOT raylib_FOUND) # If there's none, fetch and build raylib
         if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
             message(STATUS "CMAKE_SYSTEM: ${CMAKE_SYSTEM}")
             set(PLATFORM "Raspberry Pi")
+            set(OPENGL_VERSION "ES 2.0")
+            set(USE_EXTERNAL_GLFW OFF)
         endif()
         add_subdirectory(${raylib_SOURCE_DIR} ${raylib_BINARY_DIR})
     endif()
