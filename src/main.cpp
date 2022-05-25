@@ -40,10 +40,10 @@ int main(){
     // Define the camera to look into our 3d world
     Camera camera = {0};
     auto cameraHeight = 2.0f;
-    camera.position = (Vector3){ 0.0f, cameraHeight, 0.0f };    // Camera position
-    camera.target = (Vector3){ 0.0f, cameraHeight, 0.0f };      // Camera looking at point
-    camera.up = (Vector3){0.0f, 1.0f, 0.0f};          // Camera up vector (rotation towards target)
-    camera.fovy = 35.0f;                                // Camera field-of-view Y
+    camera.position = (Vector3){0.0f, cameraHeight, 0.0f };
+    camera.target = (Vector3){0.0f, cameraHeight, 0.0f };
+    camera.up = (Vector3){0.0f, 1.0f, 0.0f};
+    camera.fovy = 35.0f;
     camera.projection = CAMERA_PERSPECTIVE;             // Camera mode type
 
     SetCameraMode(camera, CAMERA_ORBITAL);
@@ -104,13 +104,10 @@ int main(){
         DrawGrid(14.0f, 0.5f);
 
         if (collision.hit){
-//            DrawCube(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, RED);
             DrawCubeWires(unicornBodyPosition, cubeSize.x, cubeSize.y, cubeSize.z, MAROON);
             DrawCubeWires(unicornBodyPosition, cubeSize.x + 0.2f, cubeSize.y + 0.2f, cubeSize.z + 0.2f, GREEN);
-        }
-        else{
-//            DrawCube(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, GRAY);
-//            DrawCubeWires(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, DARKGRAY);
+            DrawCubeWires(unicornBodyPosition, cubeSize.x + 0.3f, cubeSize.y + 0.3f, cubeSize.z + 0.3f, GREEN);
+            DrawCubeWires(unicornBodyPosition, cubeSize.x + 0.4f, cubeSize.y + 0.4f, cubeSize.z + 0.4f, GREEN);
         }
 
         EndMode3D();
@@ -131,14 +128,8 @@ int main(){
         }
 
 
-//        GuiDrawRectangle((Rectangle) {0, 0, 14, 240}, 1, GREEN, GREEN);
         GuiSetStyle(BUTTON, BORDER_WIDTH, 2);
         GuiSetStyle(BUTTON, TEXT_ALIGNMENT, GUI_TEXT_ALIGN_CENTER);
-//        GuiDrawRectangle((Rectangle) {306, 0, 320, 240}, 1, PURPLE, PURPLE);
-//        GuiDrawRectangle((Rectangle) {0, 0, 320, 14}, 1, YELLOW, YELLOW);
-//        DrawText("PUDGY", 142, 2, 10, BLACK);
-//        GuiDrawRectangle((Rectangle) {0, 226, 320, 240}, 1, RED, RED);
-//        DrawText("v0.01 alpha", 132, 228, 10, BLACK);
 
         if (GuiButton((Rectangle) {0, 1, 50, 20}, "Body")){
             selectedPart = "Body";
@@ -148,8 +139,6 @@ int main(){
             selectedPart = "Horn";
             colorPaneActive = !colorPaneActive;
         }
-//        if (GuiButton((Rectangle) {1, 105, 20, 20}, "<")) colorPaneActive = !colorPaneActive;
-//        if (GuiButton((Rectangle) {299, 105, 20, 20}, ">")) colorPaneActive = !colorPaneActive;
         if (GuiButton((Rectangle) {0, 122, 50, 20}, "Tail")){
             selectedPart = "Tail";
             colorPaneActive = !colorPaneActive;

@@ -13,12 +13,12 @@ pip3 install conan
 export PATH="$HOME/.local/bin:$PATH"
 ````
 
-### TFT support
+### TFT and touch support
 ````bash
 sudo pip3 install --upgrade adafruit-python-shell click
 git clone https://github.com/adafruit/Raspberry-Pi-Installer-Scripts.git
 cd Raspberry-Pi-Installer-Scripts
-sudo python3 adafruit-pitft.py --display=28c --rotation=270 --install-type=fbcp
+sudo python3 adafruit-pitft.py --display=28c --rotation=90 --install-type=fbcp --reboot=yes
 ````
 
 ### Build
