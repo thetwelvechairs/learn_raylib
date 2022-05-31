@@ -29,12 +29,11 @@
 }
 
 [[maybe_unused]] int getNext(const std::vector<int>& vect, size_t i, auto v) {
-    return vect[ (i+1) % v.size() ];
+    return vect[(i + 1) % v.size()];
 }
 
 auto rayHit(Camera camera, Ray ray, Model model){
     ray = GetMouseRay(GetMousePosition(), camera);
-    // Check collision between ray and model
     return GetRayCollisionModel(ray, model);
 }
 
@@ -54,13 +53,6 @@ int main(){
     Model unicornTail = LoadModel("../src/include/unicorn_tail.obj");
     models.push_back(unicornTail);
 
-    enum unicornParts {
-        body = 0,
-        mane,
-        tail,
-        horn
-    } unicornParts;
-
     Vector3 unicornBodyPosition = {0.0f, 0.0f, 0.0f};
 
     // Define the camera to look into our 3d world
@@ -74,7 +66,7 @@ int main(){
 
     SetCameraMode(camera, CAMERA_ORBITAL);
 
-    bool colorPaneActive;
+    bool colorPaneActive = false;
     auto unicornBodyColor = PINK;
     auto unicornHornColor = GREEN;
     auto unicornManeColor = YELLOW;
@@ -82,34 +74,20 @@ int main(){
 
     bool exitWindow = false;
 
-    int selectedPart = -1;
-
-    auto clicked = false;
-
-    Vector3 cubePosition = {0.0f, 1.0f, 0.0f};
-    Vector3 cubeSize = {2.0f, 2.0f, 2.0f};
     Ray ray = {0};
     RayCollision collision = {false};
 
-    int collisionModelIndex = 0;
-
-    auto texture = LoadRenderTexture(screenWidth, screenHeight);
+    int collisionModelIndex = -1;
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-    //--------------------------------------------------------------------------------------
 
-    // Main game loop
     while (!IsKeyPressed(KEY_ESCAPE)){
-        if (IsKeyPressed(KEY_ONE)) colorPaneActive = !colorPaneActive;
-//        if (IsKeyPressed(KEY_TWO)) selectedPart = unicornParts.;
-
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-            if (!colorPaneActive){
-                collisionModelIndex = -1;
+            collisionModelIndex = -1;
+            if (!exitWindow && !colorPaneActive){
                 for (int n = 0; n < models.size(); n++) {
                     collision = rayHit(camera, ray, models.at(n));
                     if (collision.hit) {
-                        colorPaneActive = true;
                         collisionModelIndex = n;
                     }
                 }
@@ -120,7 +98,6 @@ int main(){
 
         ClearBackground(WHITE);
 
-//        BeginTextureMode(texture);
         BeginMode3D(camera);
         const float radius = 10.0f;
         const float speedFactor = 4.0f;
@@ -145,44 +122,21 @@ int main(){
 //        EndTextureMode();
 //        DrawTexture(texture.texture, screenWidth, screenHeight, BLACK);
 
-        if (colorPaneActive){
-            if (collisionModelIndex == 0 && !exitWindow) {
-                exitWindow = GuiWindowBox((Rectangle) {40, 40, 240, 160}, "Body");
+        if (collisionModelIndex > -1){
+            if (collisionModelIndex == 0) {
+                exitWindow = GuiWindowBox((Rectangle) {60, 40, 160, 160}, "Body");
                 unicornBodyColor = GuiColorPicker((Rectangle) {70, 70, 120, 120}, nullptr, unicornBodyColor);
-            } else if (collisionModelIndex == 1 && !exitWindow) {
-                exitWindow = GuiWindowBox((Rectangle) {40, 40, 240, 160}, "Hair");
-                unicornHornColor = GuiColorPicker((Rectangle) {170, 110, 120, 120}, nullptr, unicornHornColor);
-            } else if (collisionModelIndex == 2 && !exitWindow) {
-                exitWindow = GuiWindowBox((Rectangle) {40, 40, 240, 160}, "Mane");
-                unicornManeColor = GuiColorPicker((Rectangle) {170, 110, 120, 120}, nullptr, unicornManeColor);
-            } else if (collisionModelIndex == 3 && !exitWindow) {
-                exitWindow = GuiWindowBox((Rectangle) {40, 40, 240, 160}, "Tail");
-                unicornTailColor = GuiColorPicker((Rectangle) {170, 110, 120, 120}, nullptr, unicornTailColor);
-            } else {
-                exitWindow = false;
+            } else if (collisionModelIndex == 1) {
+                exitWindow = GuiWindowBox((Rectangle) {60, 40, 160, 160}, "Hair");
+                unicornHornColor = GuiColorPicker((Rectangle) {70, 70, 120, 120}, nullptr, unicornHornColor);
+            } else if (collisionModelIndex == 2) {
+                exitWindow = GuiWindowBox((Rectangle) {60, 40, 160, 160}, "Mane");
+                unicornManeColor = GuiColorPicker((Rectangle) {70, 70, 120, 120}, nullptr, unicornManeColor);
+            } else if (collisionModelIndex == 3) {
+                exitWindow = GuiWindowBox((Rectangle) {60, 40, 160, 160}, "Tail");
+                unicornTailColor = GuiColorPicker((Rectangle) {70, 70, 120, 120}, nullptr, unicornTailColor);
             }
         }
-
-
-//        GuiSetStyle(BUTTON, BORDER_WIDTH, 2);
-//        GuiSetStyle(BUTTON, TEXT_ALIGNMENT, GUI_TEXT_ALIGN_CENTER);
-//
-//        if (GuiButton((Rectangle) {0, 1, 50, 20}, "Body")){
-//            selectedPart = 0;
-//            colorPaneActive = !colorPaneActive;
-//        }
-//        if (GuiButton((Rectangle) {0, 62, 50, 20}, "Horn")){
-//            selectedPart = 1;
-//            colorPaneActive = !colorPaneActive;
-//        }
-//        if (GuiButton((Rectangle) {0, 122, 50, 20}, "Tail")){
-//            selectedPart = 2;
-//            colorPaneActive = !colorPaneActive;
-//        }
-//        if (GuiButton((Rectangle) {0, 186, 50, 20}, "Mane")){
-//            selectedPart = 3;
-//            colorPaneActive = !colorPaneActive;
-//        }
 
         EndDrawing();
     }
