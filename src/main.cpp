@@ -1,5 +1,7 @@
 #include "raylib.h"
 #include <cstdlib>
+#include <iostream>
+
 
 #define RAYGUI_IMPLEMENTATION
 
@@ -82,18 +84,6 @@ int main(){
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
     while (!IsKeyPressed(KEY_ESCAPE)){
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-            collisionModelIndex = -1;
-            if (!exitWindow && !colorPaneActive){
-                for (int n = 0; n < models.size(); n++) {
-                    collision = rayHit(camera, ray, models.at(n));
-                    if (collision.hit) {
-                        collisionModelIndex = n;
-                    }
-                }
-            }
-        }
-
         BeginDrawing();
 
         ClearBackground(WHITE);
@@ -111,18 +101,21 @@ int main(){
 
         DrawGrid(14.0f, 0.5f);
 
-//        if (collision.hit){
-//            DrawCubeWires(unicornBodyPosition, cubeSize.x, cubeSize.y, cubeSize.z, MAROON);
-//            DrawCubeWires(unicornBodyPosition, cubeSize.x + 0.2f, cubeSize.y + 0.2f, cubeSize.z + 0.2f, GREEN);
-//            DrawCubeWires(unicornBodyPosition, cubeSize.x + 0.3f, cubeSize.y + 0.3f, cubeSize.z + 0.3f, GREEN);
-//            DrawCubeWires(unicornBodyPosition, cubeSize.x + 0.4f, cubeSize.y + 0.4f, cubeSize.z + 0.4f, GREEN);
-//        }
-
         EndMode3D();
-//        EndTextureMode();
-//        DrawTexture(texture.texture, screenWidth, screenHeight, BLACK);
 
-        if (collisionModelIndex > -1){
+        if (!colorPaneActive && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+            collisionModelIndex = -1;
+            for (int n = 0; n < models.size(); n++) {
+                collision = rayHit(camera, ray, models.at(n));
+                if (collision.hit) {
+                    collisionModelIndex = n;
+                    colorPaneActive = true;
+                    exitWindow = false;
+                }
+            }
+        }
+
+        if (!exitWindow && collisionModelIndex > -1){
             if (collisionModelIndex == 0) {
                 exitWindow = GuiWindowBox((Rectangle) {60, 40, 160, 160}, "Body");
                 unicornBodyColor = GuiColorPicker((Rectangle) {70, 70, 120, 120}, nullptr, unicornBodyColor);
@@ -137,8 +130,15 @@ int main(){
                 unicornTailColor = GuiColorPicker((Rectangle) {70, 70, 120, 120}, nullptr, unicornTailColor);
             }
         }
+        else{
+            colorPaneActive = false;
+        }
 
         EndDrawing();
+        std::cout << "============================" << std::endl;
+        std::cout << "| colorPaneActive:     " << colorPaneActive << std::endl;
+        std::cout << "| exitWindow:          " << exitWindow << std::endl;
+        std::cout << "| collisionModelIndex: " << collisionModelIndex << std::endl;
     }
 
     CloseWindow();
