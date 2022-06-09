@@ -77,7 +77,7 @@ int main(){
     bool exitWindow = false;
 
     Ray ray = {0};
-    RayCollision collision = {false};
+    RayCollision collision;
 
     int collisionModelIndex = -1;
 
@@ -103,19 +103,19 @@ int main(){
 
         EndMode3D();
 
-        if (!colorPaneActive && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+        if (!colorPaneActive && IsMouseButtonReleased(MOUSE_BUTTON_LEFT)){
             collisionModelIndex = -1;
             for (int n = 0; n < models.size(); n++) {
                 collision = rayHit(camera, ray, models.at(n));
                 if (collision.hit) {
                     collisionModelIndex = n;
-                    colorPaneActive = true;
                     exitWindow = false;
                 }
             }
         }
 
         if (!exitWindow && collisionModelIndex > -1){
+            colorPaneActive = true;
             if (collisionModelIndex == 0) {
                 exitWindow = GuiWindowBox((Rectangle) {60, 40, 160, 160}, "Body");
                 unicornBodyColor = GuiColorPicker((Rectangle) {70, 70, 120, 120}, nullptr, unicornBodyColor);
@@ -130,15 +130,15 @@ int main(){
                 unicornTailColor = GuiColorPicker((Rectangle) {70, 70, 120, 120}, nullptr, unicornTailColor);
             }
         }
-        else{
+        else {
             colorPaneActive = false;
         }
 
         EndDrawing();
-        std::cout << "============================" << std::endl;
-        std::cout << "| colorPaneActive:     " << colorPaneActive << std::endl;
-        std::cout << "| exitWindow:          " << exitWindow << std::endl;
-        std::cout << "| collisionModelIndex: " << collisionModelIndex << std::endl;
+//        std::cout << "============================" << std::endl;
+//        std::cout << "| colorPaneActive:     " << colorPaneActive << std::endl;
+//        std::cout << "| exitWindow:          " << exitWindow << std::endl;
+//        std::cout << "| collisionModelIndex: " << collisionModelIndex << std::endl;
     }
 
     CloseWindow();
