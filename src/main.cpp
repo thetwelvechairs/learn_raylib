@@ -86,7 +86,7 @@ int main(){
     while (!IsKeyPressed(KEY_ESCAPE)){
         BeginDrawing();
 
-        ClearBackground(WHITE);
+        ClearBackground(BLACK);
 
         BeginMode3D(camera);
         const float radius = 10.0f;
