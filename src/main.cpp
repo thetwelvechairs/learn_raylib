@@ -40,8 +40,8 @@ auto rayHit(Camera camera, Ray ray, Model model){
 }
 
 int main(){
-    const int screenWidth = 320;
-    const int screenHeight = 240;
+    const int screenWidth = 240;
+    const int screenHeight = 320;
 
     std::string title = std::to_string(screenWidth) + "x" + std::to_string(screenHeight);
     InitWindow(screenWidth, screenHeight, title.c_str());
@@ -113,7 +113,6 @@ int main(){
                 }
             }
         }
-
         if (!exitWindow && collisionModelIndex > -1){
             colorPaneActive = true;
             if (collisionModelIndex == 0) {
